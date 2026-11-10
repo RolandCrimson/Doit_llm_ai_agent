@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
-client = OpenAI(api_key=api_key)
+# api_key = os.getenv('OPENAI_API_KEY')
+client = OpenAI()
 
 # ② 
 response = client.chat.completions.create(
@@ -20,5 +20,5 @@ response = client.chat.completions.create(
 
 print(response)
 
-print('----')	# ⑤
+print('-'*80)	# ⑤
 print(response.choices[0].message.content) 

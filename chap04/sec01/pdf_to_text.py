@@ -10,7 +10,7 @@ full_text = ''
 #②
 for page in doc: # 문서 페이지 반복
     text = page.get_text() # 페이지 텍스트 추출
-    full_text += text
+    full_text += text #type:ignore
 
 #③
 pdf_file_name = os.path.basename(pdf_file_path)

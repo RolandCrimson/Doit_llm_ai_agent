@@ -16,7 +16,7 @@ for page in doc:
     footer = page.get_text(clip=(0, rect.height - footer_height, rect.width , rect.height))
     text = page.get_text(clip=(0, header_height, rect.width , rect.height - footer_height))
 
-    full_text += text + '\n------------------------------------\n'
+    full_text += text + '\n------------------------------------\n' #type:ignore
 
 # 파일명만 추출
 pdf_file_name = os.path.basename(pdf_file_path)

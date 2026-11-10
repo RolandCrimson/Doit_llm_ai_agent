@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
+# api_key = os.getenv('OPENAI_API_KEY')
 
 def summarize_txt(file_path: str): # ①
-    client = OpenAI(api_key=api_key)
+    client = OpenAI()
 
     # ② 주어진 텍스트 파일을 읽어들인다.
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -52,4 +52,4 @@ if __name__ == '__main__':
 
     # ⑤ 요약된 내용을 파일로 저장한다.
     with open('./chap04/output/crop_model_summary.txt', 'w', encoding='utf-8') as f:
-        f.write(summary)
+        f.write(summary) #type:ignore

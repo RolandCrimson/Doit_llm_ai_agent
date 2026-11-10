@@ -4,7 +4,7 @@ import os
 import pymupdf
 
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
+# api_key = os.getenv('OPENAI_API_KEY')
 
 def pdf_to_text(pdf_file_path: str):
     doc = pymupdf.open(pdf_file_path)
@@ -21,7 +21,7 @@ def pdf_to_text(pdf_file_path: str):
         footer = page.get_text(clip=(0, rect.height - footer_height, rect.width , rect.height))
         text = page.get_text(clip=(0, header_height, rect.width , rect.height - footer_height))
 
-        full_text += text + '\n------------------------------------\n'
+        full_text += text + '\n------------------------------------\n' #type:ignore
 
     # 파일명만 추출
     pdf_file_name = os.path.basename(pdf_file_path)
@@ -36,7 +36,7 @@ def pdf_to_text(pdf_file_path: str):
 
 
 def summarize_txt(file_path: str): # ①
-    client = OpenAI(api_key=api_key)
+    client = OpenAI()
 
     # ② 주어진 텍스트 파일을 읽어들인다.
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -79,7 +79,7 @@ def summarize_pdf(pdf_file_path: str, output_file_path: str):
     summary = summarize_txt(txt_file_path)
 
     with open(output_file_path, 'w', encoding='utf-8') as f:
-        f.write(summary)
+        f.write(summary) #type:ignore
 
 
 if __name__ == '__main__':
