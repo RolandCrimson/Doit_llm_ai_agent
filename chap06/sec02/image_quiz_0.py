@@ -5,8 +5,8 @@ import os
 import base64
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
-client = OpenAI(api_key=api_key)  # OpenAI 클라이언트의 인스턴스 생성
+# api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
+client = OpenAI()  # OpenAI 클라이언트의 인스턴스 생성
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
@@ -56,8 +56,8 @@ def image_quiz(image_path):
     return response.choices[0].message.content
 
 
-q = image_quiz("./chap06/data/images/busan_dive.jpg")
-print(q)
+# q = image_quiz("./chap06/data/images/busan_dive.jpg")
+# print(q)
 
 
 
@@ -82,8 +82,10 @@ for g in glob('./chap06/data/images/*.jpg'):  # ②
     print(q)
     txt += q + '\n\n---------------------\n\n'
     # ④ 마크다운 파일로 저장
-    with open('./chap06/data/images/image_quiz.md', 'w', encoding='utf-8') as f:
-        f.write(txt)
+    # with open('./chap06/data/images/image_quiz.md', 'w', encoding='utf-8') as f:
+    #     f.write(txt)
     
     no += 1 # 문제 번호 증가
-
+# ④ 마크다운 파일로 저장
+with open('./chap06/data/images/image_quiz.md', 'w', encoding='utf-8') as f:
+    f.write(txt)

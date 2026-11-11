@@ -1,4 +1,4 @@
-from gpt_functions import get_current_time, tools, get_yf_stock_info
+from gpt_functions_0 import get_current_time, tools, get_yf_stock_info
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
@@ -6,9 +6,9 @@ import json
 import streamlit as st
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
+# api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
 
-client = OpenAI(api_key=api_key)  # 오픈AI 클라이언트의 인스턴스 생성
+client = OpenAI()  # 오픈AI 클라이언트의 인스턴스 생성
 
 def get_ai_response(messages, tools=None):
     response = client.chat.completions.create(

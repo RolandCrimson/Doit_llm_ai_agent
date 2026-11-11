@@ -3,19 +3,26 @@ import torch
 import pandas as pd
 from transformers import AutoModelForSpeechSeq2Seq, AutoProcessor, pipeline 
 from pyannote.audio import Pipeline 
+from dotenv import load_dotenv
+import torchaudio
 
-os.environ["PATH"] += os.pathsep + r"C:\github\gpt_agent_2025_easyspub\ffmpeg-2025-02-10-full_build\bin" # 자신이 설치한 위치로 경로 수정
+load_dotenv()
+
+HUGGING_FACE_TOKEN = os.getenv("HUGGING_FACE_ACCESS_TOKEN")
+
+# os.environ["PATH"] += os.pathsep + r"C:\github\gpt_agent_2025_easyspub\ffmpeg-2025-02-10-full_build\bin" # 자신이 설치한 위치로 경로 수정
 
 def whisper_stt(
     audio_file_path: str,      
     output_file_path: str = "./output.csv"
 ):
+    print('############# START whisper_stt ##################')
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
     model_id = "openai/whisper-large-v3-turbo"
 
     model = AutoModelForSpeechSeq2Seq.from_pretrained(
-        model_id, torch_dtype=torch_dtype, 
+        model_id, dtype=torch_dtype, 
         low_cpu_mem_usage=True, 
         use_safetensors=True
     )
@@ -28,7 +35,7 @@ def whisper_stt(
         model=model,
         tokenizer=processor.tokenizer,
         feature_extractor=processor.feature_extractor,
-        torch_dtype=torch_dtype,
+        dtype=torch_dtype,
         device=device,
         return_timestamps=True,  # 청크별로 타임스탬프를 반환
         chunk_length_s=10,  # 입력 오디오를 10초씩 나누기
@@ -37,12 +44,14 @@ def whisper_stt(
 
     result = pipe(audio_file_path)
     df = whisper_to_dataframe(result, output_file_path)
-
+    print('############# END whisper_stt ##################')
     return result, df
 
 
 def whisper_to_dataframe(result, output_file_path):
     start_end_text = []
+
+    print('############# START whisper_to_dataframe ##################')
 
     for chunk in result["chunks"]:
         start = chunk["timestamp"][0]
@@ -51,7 +60,8 @@ def whisper_to_dataframe(result, output_file_path):
         start_end_text.append([start, end, text])
         df = pd.DataFrame(start_end_text, columns=["start", "end", "text"])
         df.to_csv(output_file_path, index=False, sep="|")
-    
+
+    print('############# END whisper_to_dataframe ##################')
     return df
 
 
@@ -60,9 +70,10 @@ def speaker_diarization(
         output_rttm_file_path: str,
         output_csv_file_path: str
     ):
+    print('############# START speaker_diarization ##################')
     pipeline = Pipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1",
-        #use_auth_token=""
+        token=HUGGING_FACE_TOKEN
     )
 
     # cuda가 사용 가능한 경우 cuda를 사용하도록 설정
@@ -71,11 +82,16 @@ def speaker_diarization(
         print('cuda is available')
     else:
         print('cuda is not available')
-    diarization_pipeline = pipeline(audio_file_path)
+
+    wav_path = "./chap05/audio/싼기타_비싼기타.wav"
+    waveform, sample_rate = torchaudio.load(wav_path)
+    audio = {"waveform": waveform, "sample_rate": sample_rate}
+
+    diarization_pipeline = pipeline(audio)
 
     # dump the diarization output to disk using RTTM format
     with open(output_rttm_file_path, "w", encoding='utf-8') as rttm:
-        diarization_pipeline.write_rttm(rttm)
+        diarization_pipeline.speaker_diarization.write_rttm(rttm)
 
     # pandas dataframe으로 변환
     df_rttm = pd.read_csv(
@@ -93,7 +109,7 @@ def speaker_diarization(
 
     for i in range(1, len(df_rttm)):
         if df_rttm.at[i, "speaker_id"] != df_rttm.at[i-1, "speaker_id"]:
-            df_rttm.at[i, "number"] = df_rttm.at[i-1, "number"] + 1
+            df_rttm.at[i, "number"] = int(df_rttm.at[i-1, "number"]) + 1
         else:
             df_rttm.at[i, "number"] = df_rttm.at[i-1, "number"]
 
@@ -104,12 +120,14 @@ def speaker_diarization(
     )
 
     df_rttm_grouped["duration"] = df_rttm_grouped["end"] - df_rttm_grouped["start"]
+    df_rttm_grouped = df_rttm_grouped.reset_index(drop=True)
 
     df_rttm_grouped.to_csv(
         output_csv_file_path,
         index=False,    # 인덱스는 저장하지 않음
         encoding='utf-8' 
     )
+    print('############# END speaker_diarization ##################')
     return df_rttm_grouped
 
 
@@ -120,6 +138,8 @@ def stt_to_rttm(
         rttm_csv_file_path: str,
         final_output_csv_file_path: str
     ):
+
+    print('############# START stt_to_rttm ##################')
 
     result, df_stt = whisper_stt(
         audio_file_path, 
@@ -152,6 +172,8 @@ def stt_to_rttm(
         sep='|',
         encoding='utf-8'
     )  # ④
+
+    print('############# END stt_to_rttm ##################')
     return df_rttm
 
 

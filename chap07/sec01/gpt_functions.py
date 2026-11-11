@@ -31,4 +31,5 @@ tools = [
 
 
 if __name__ == '__main__':
-    get_current_time('America/New_York')
+    # get_current_time('America/New_York')
+    get_current_time()

@@ -4,9 +4,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
+# api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
 
-client = OpenAI(api_key=api_key)  # 오픈AI 클라이언트의 인스턴스 생성
+client = OpenAI()  # 오픈AI 클라이언트의 인스턴스 생성
 
 def get_ai_response(messages, tools=None):
     response = client.chat.completions.create(
@@ -49,6 +49,7 @@ while True:
 
         ai_response = get_ai_response(messages, tools=tools) # 다시 GPT 응답 받기
         ai_message = ai_response.choices[0].message
+        print(ai_message)
 
     messages.append(ai_message)  # AI 응답을 대화 기록에 추가하기
 

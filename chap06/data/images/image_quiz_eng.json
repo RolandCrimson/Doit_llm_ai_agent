@@ -1,42 +1,42 @@
 [
     {
         "no": 1,
-        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) A lot of people are using laptops.\n- (2) There are many lights installed on the ceiling.\n- (3) The text \"DIVE 2024 IN BUSAN\" is visible.\n- (4) People are mostly engaged in outdoor activities.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) Many people are sitting in a large indoor space in front of computers.\n- (2) The phrase 'DIVE 2024 IN BUSAN' is visible at the venue.\n- (3) It shows people filming a movie.\n- (4) There are several lights installed on the ceiling.",
         "img": "busan_dive.jpg"
     },
     {
         "no": 2,
-        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) There is a yellow sculpture.\n- (2) The words \"Local Stitch\" can be seen on the building.\n- (3) The sculpture is green.\n- (4) The building walls are made of brick.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) There is a yellow sculpture in front of the building.\n- (2) The top of the building displays the words \"Local Stitch.\"\n- (3) There are people sitting in front of the sculpture.\n- (4) The building is composed of red and gray colors.",
         "img": "local_stitch.jpg"
     },
     {
         "no": 3,
-        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) It shows the interior of a cafe.\n- (2) The wall behind the counter is yellow.\n- (3) There is a clock on the wall.\n- (4) There are chairs and tables.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) It shows the interior of a cafe.\n- (2) There is a yellow background behind the counter.\n- (3) There are three staff members standing at the counter.\n- (4) Customers are placing orders.",
         "img": "local_stitch_terrarosa.jpg"
     },
     {
         "no": 4,
-        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) A brick building is visible.\n- (2) There is a sign that says PERSONAL COFFEE on the second floor.\n- (3) There is a cone-shaped orange object in front of the building.\n- (4) The building is located at the corner of four streets.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) The exterior of the building is made of brick.\n- (2) There is a \"PERSONAL COFFEE\" sign on the window.\n- (3) There is a construction sign on the road in front of the building.\n- (4) Solar panels are installed on the roof of the building.",
         "img": "mangwon.jpg"
     },
     {
         "no": 5,
-        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) There are various types of bread displayed inside the glass case.\n- (2) A clerk is wearing a white hat.\n- (3) Yellow price tags can be seen on the display.\n- (4) More than one clerk is visible in the image.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) Various types of bread are displayed on the shelf.\n- (2) A clerk is seen arranging the bread.\n- (3) Bread price tags are attached to the glass.\n- (4) People are seen choosing bread.",
         "img": "mangwon_bakery.jpg"
     },
     {
         "no": 6,
-        "eng": "Which of the following descriptions of the image is incorrect?\n\n- (1) People are working in front of a bakery cafe.\n- (2) There is a store called 'Nutricore.'\n- (3) The cafe's sign is green.\n- (4) All workers are wearing yellow helmets.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) People are working in front of a building.\n- (2) There is a store with a green sign.\n- (3) A tree is standing on the left side of the image.\n- (4) People are dining at a restaurant.",
         "img": "sangam_interior.jpg"
     },
     {
         "no": 7,
-        "eng": "Which of the following descriptions of the image is incorrect?\n\n- (1) Some people are sitting and talking at tables.\n- (2) The floor is made of wooden panels.\n- (3) The outdoors is not visible through the windows.\n- (4) There are lights installed on the ceiling.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) People are conversing in a spacious cafe.\n- (2) Trees outside are visible through the windows.\n- (3) All tables in the cafe have people sitting at them.\n- (4) The floor is made of wooden planks.",
         "img": "seolleung_terrarosa.jpg"
     },
     {
         "no": 8,
-        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) People are lined up to board a bus.\n- (2) The outside is visible through a coffee shop window.\n- (3) Many people are shown buying bread.\n- (4) A bus is parked on the road.",
+        "eng": "Which of the following descriptions of the image is incorrect?\n- (1) People are queuing to board a bus.\n- (2) The phrase 'COFFEE & BAKERY' is visible in part of the image.\n- (3) The trees have all shed their leaves.\n- (4) A man is using a mobile phone.",
         "img": "stanford_coffee.jpg"
     }
 ]

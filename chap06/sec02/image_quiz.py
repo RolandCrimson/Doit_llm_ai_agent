@@ -6,8 +6,8 @@ import os
 import base64
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
-client = OpenAI(api_key=api_key)  # OpenAI 클라이언트의 인스턴스 생성
+# api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
+client = OpenAI()  # OpenAI 클라이언트의 인스턴스 생성
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:
