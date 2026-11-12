@@ -7,9 +7,9 @@ import streamlit as st
 from collections import defaultdict
 
 load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
+# api_key = os.getenv("OPENAI_API_KEY")  # 환경 변수에서 API 키 가져오기
 
-client = OpenAI(api_key=api_key)  # 오픈AI 클라이언트의 인스턴스 생성
+client = OpenAI()  # 오픈AI 클라이언트의 인스턴스 생성
 
 
 def tool_list_to_tool_obj(tools):
@@ -44,7 +44,7 @@ def get_ai_response(messages, tools=None, stream=True):
         model="gpt-4o",  # 응답 생성에 사용할 모델을 지정합니다.
         stream=stream, # (1) 스트리밍 출력을 위해 설정
         messages=messages,  # 대화 기록을 입력으로 전달합니다.
-        tools=tools,  # 사용 가능한 도구 목록을 전달합니다.
+        tools=tools,  #type:ignore
     )
 
     if stream: 
@@ -138,7 +138,7 @@ if user_input := st.chat_input():    # 사용자 입력 받기
                 "role": "function",
                 "tool_call_id": tool_call_id,
                 "name": tool_name,
-                "content": func_result,
+                "content": func_result, #type:ignore
             })
 
 

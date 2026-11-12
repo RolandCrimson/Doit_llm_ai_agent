@@ -6,6 +6,10 @@ from langchain_core.tools import tool
 from datetime import datetime
 import pytz
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # 모델 초기화
 llm = ChatOpenAI(model="gpt-4o-mini")
@@ -43,10 +47,10 @@ def get_ai_response(messages):
         else:
             gathered += chunk
  
-    if gathered.tool_calls:
+    if gathered.tool_calls: #type:ignore
         st.session_state.messages.append(gathered)
         
-        for tool_call in gathered.tool_calls:
+        for tool_call in gathered.tool_calls:#type:ignore
             selected_tool = tool_dict[tool_call['name']]
             tool_msg = selected_tool.invoke(tool_call) 
             print(tool_msg, type(tool_msg))

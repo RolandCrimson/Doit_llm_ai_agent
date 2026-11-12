@@ -15,8 +15,8 @@ def get_ai_response(messages, tools=None, stream=True):
         model="gpt-4o",  # 응답 생성에 사용할 모델을 지정합니다.
         stream=stream, # (1) 스트리밍 출력을 위해 설정
         messages=messages,  # 대화 기록을 입력으로 전달합니다.
-        tools=tools,  # 사용 가능한 도구 목록을 전달합니다.
-    )
+        tools=tools,  #type:ignore
+    ) 
 
     if stream: 
         for chunk in response:
@@ -54,7 +54,7 @@ if user_input := st.chat_input():    # 사용자 입력 받기
     print('\n===========')
     print(content)
 
-    ai_message = ai_response.choices[0].message
+    ai_message = ai_response.choices[0].message #type:ignore
     tool_calls = ai_message.tool_calls  # AI 응답에 포함된 tool_calls를 가져옵니다.
     if tool_calls:  # tool_calls가 있는 경우
         for tool_call in tool_calls:
@@ -80,13 +80,13 @@ if user_input := st.chat_input():    # 사용자 입력 받기
                 "role": "function",
                 "tool_call_id": tool_call_id,
                 "name": tool_name,
-                "content": func_result,
+                "content": func_result,#type:ignore
             })
 
 
         st.session_state.messages.append({"role": "system", "content": "이제 주어진 결과를 바탕으로 답변할 차례다."}) 
         ai_response = get_ai_response(st.session_state.messages, tools=tools) # 다시 GPT 응답 받기
-        ai_message = ai_response.choices[0].message
+        ai_message = ai_response.choices[0].message #type:ignore
 
     st.session_state.messages.append({
         "role": "assistant",

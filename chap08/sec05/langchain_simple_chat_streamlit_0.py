@@ -1,5 +1,5 @@
 import streamlit as st
-
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI  # 오픈AI 모델을 사용하는 랭체인 챗봇 클래스
 from langchain_core.chat_history import (
     BaseChatMessageHistory,  # 기본 대화 기록 클래스
@@ -8,7 +8,7 @@ from langchain_core.chat_history import (
 from langchain_core.runnables.history import RunnableWithMessageHistory  # 메시지 기록을 활용해 실행 가능한 wrapper 클래스
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
-
+load_dotenv()
 st.title("💬 Chatbot")
 
 if "messages" not in st.session_state:
@@ -45,7 +45,7 @@ if prompt := st.chat_input():
     st.session_state.messages.append(HumanMessage(prompt))
     st.chat_message("user").write(prompt)
 
-    response = with_message_history.invoke([HumanMessage(prompt)], config=config)
+    response = with_message_history.invoke([HumanMessage(prompt)], config=config) #type:ignore
 
     msg = response.content
     st.session_state.messages.append(response)

@@ -42,7 +42,7 @@ if prompt := st.chat_input():
     st.session_state.messages.append(HumanMessage(prompt))
     st.chat_message("user").write(prompt)
 
-    response = with_message_history.stream([HumanMessage(prompt)], config=config)
+    response = with_message_history.stream([HumanMessage(prompt)], config=config)#type:ignore
 
     ai_response_bucket = None
     with st.chat_message("assistant").empty():
@@ -54,7 +54,7 @@ if prompt := st.chat_input():
             print(r.content, end='')
             st.markdown(ai_response_bucket.content)
 
-    msg = ai_response_bucket.content
+    msg = ai_response_bucket.content#type:ignore
     st.session_state.messages.append(ai_response_bucket)
     print('assistant:', msg) 
 
