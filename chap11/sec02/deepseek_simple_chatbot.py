@@ -29,7 +29,7 @@ while True:
             ai_message += chunk
     print('')
 	#③
-    message_only = ai_message.content.split("</think>")[1].strip()
-    messages.append(AIMessage(message_only))
+    # message_only = ai_message.content.split("</think>")[1].strip()
+    messages.append(AIMessage(ai_message.content))
 
     # print("AI: " + response.content)
