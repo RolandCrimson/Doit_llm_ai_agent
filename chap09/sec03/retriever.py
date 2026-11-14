@@ -20,7 +20,7 @@ vectorstore = Chroma(
 retriever = vectorstore.as_retriever(k=3)
 
 # Create document chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser # 문자열 출력 파서를 불러옵니다.
 

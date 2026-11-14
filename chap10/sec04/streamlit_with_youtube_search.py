@@ -6,16 +6,21 @@ from langchain_core.tools import tool
 from datetime import datetime
 import pytz
 
-from langchain_community.tools import DuckDuckGoSearchResults
-from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
+# from langchain_community.tools import DuckDuckGoSearchResults
+# from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
+from tavily import TavilyClient
 
 from youtube_search import YoutubeSearch
 from langchain_community.document_loaders import YoutubeLoader
 from typing import List
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 # 모델 초기화
 llm = ChatOpenAI(model="gpt-4o-mini")
+client = TavilyClient()
 
 # 도구 함수 정의
 @tool
@@ -31,31 +36,28 @@ def get_current_time(timezone: str, location: str) -> str:
         return f"알 수 없는 타임존: {timezone}"
     
 @tool
-def get_web_search(query: str, search_period: str) -> str:	#①
+def get_web_search(query: str, search_period: str) -> List:	#①
 	#③
     """
     웹 검색을 수행하는 함수.
 
     Args:
         query (str): 검색어
-        search_period (str): 검색 기간 (e.g., "w" for past week, "m" for past month, "y" for past year)	#②
+        search_period (str): 검색 기간 (e.g., "week" for past week, "month" for past month, "year" for past year)	#②
 
     Returns:
         str: 검색 결과
     """
-    wrapper = DuckDuckGoSearchAPIWrapper(region="kr-kr", time=search_period)
 
     print('-------- WEB SEARCH --------')
     print(query)
     print(search_period)
-
-    search = DuckDuckGoSearchResults(
-        api_wrapper=wrapper,
-        # source="news",
-        results_separator=';\n'
+    
+    docs = client.search(
+        query=query,
+        time_range=search_period,
     )
-
-    docs = search.invoke(query)
+    
     return docs
 
 
@@ -157,7 +159,7 @@ if prompt := st.chat_input():
     st.chat_message("user").write(prompt) # 사용자 메시지 출력
     st.session_state.messages.append(HumanMessage(prompt)) # 사용자 메시지 저장
 
-    response = get_ai_response(st.session_state["messages"])
-    
-    result = st.chat_message("assistant").write_stream(response) # AI 메시지 출력
+    with st.spinner("AI답변 생성 중..."):
+        response = get_ai_response(st.session_state["messages"])
+        result = st.chat_message("assistant").write_stream(response) # AI 메시지 출력
     st.session_state["messages"].append(AIMessage(result)) # AI 메시지 저장    
