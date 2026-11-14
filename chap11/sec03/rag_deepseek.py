@@ -5,7 +5,7 @@ import retriever
 
 
 # 모델 초기화
-llm = ChatOllama(model="deepseek-r1:14b")
+llm = ChatOllama(model="deepseek-r1")
 
 # 사용자의 메시지 처리하기 위한 함수
 def get_ai_response(messages, docs):    

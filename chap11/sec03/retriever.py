@@ -4,12 +4,12 @@ embedding = OpenAIEmbeddings(model='text-embedding-3-large')
 
 # 언어 모델 불러오기
 from langchain_ollama import ChatOllama
-llm = ChatOllama(model="deepseek-r1:14b")
+llm = ChatOllama(model="deepseek-r1")
 
 # Load Chroma store
 from langchain_chroma import Chroma
 print("Loading existing Chroma store")
-persist_directory = 'C:/github/gpt_agent_2025_easyspub/chap09/chroma_store'
+persist_directory = 'D:/source/Doit_llm_agent/chap09/chroma_store'
 
 vectorstore = Chroma(
     persist_directory=persist_directory, 
@@ -20,7 +20,7 @@ vectorstore = Chroma(
 retriever = vectorstore.as_retriever(k=3)
 
 # Create document chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser # 문자열 출력 파서를 불러옵니다.
 
@@ -30,7 +30,7 @@ question_answering_prompt = ChatPromptTemplate.from_messages(
             "system",
             "사용자의 질문에 대해 아래 context에 기반하여 답변하라.:\n\n{context}",
         ),
-        MessagesPlaceholder(variable_name="messages"),
+        MessagesPlaceholder("messages"),
     ]
 )
 
@@ -39,7 +39,7 @@ document_chain = create_stuff_documents_chain(llm, question_answering_prompt) | 
 # query augmentation chain
 query_augmentation_prompt = ChatPromptTemplate.from_messages(
     [
-        MessagesPlaceholder(variable_name="messages"), # 기존 대화 내용
+        MessagesPlaceholder("messages"), # 기존 대화 내용
         (
             "system",
             "기존의 대화 내용을 활용하여 사용자의 아래 질문의 의도를 파악하여 명료한 한 문장의 질문으로 변환하라. 대명사나 이, 저, 그와 같은 표현을 명확한 명사로 표현하라. :\n\n{query}",
